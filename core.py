@@ -45,6 +45,10 @@ class printProg:
 
     def __init__(self, message, printInterval=1, monitorGPU=False):
         self.progress_info_dir = os.path.split(__file__)[0]+"/logs/"
+        try:
+            os.mkdir(self.progress_info_dir)
+        except:
+            pass
         self.monitorGPU = monitorGPU
         if self.monitorGPU:
             import pynvml
