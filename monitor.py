@@ -74,4 +74,5 @@ def launch_monitoring(extra_infos = True):
     except KeyboardInterrupt:
         pass
 
-launch_monitoring()
+if __name__ == '__main__':
+    launch_monitoring()
