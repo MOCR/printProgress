@@ -19,7 +19,7 @@ def size_formating(s, target_len, cut_end=False):
     return s
 
 
-def launch_monitoring(extra_infos = True):
+def launch_monitoring(refresh=True, extra_infos = True):
     files_dates = {}
     files_data = {}
     try:
@@ -70,7 +70,10 @@ def launch_monitoring(extra_infos = True):
                                         print(size_formating("", first_col) +
                                               size_formating(inf_key.replace("_", " ") + " :",sec_col) +
                                               size_formating(str( files_data[f_path]["infos"][inf_key]),third_col))
-            time.sleep(0.2)
+            if not refresh:
+                break
+            else:
+                time.sleep(0.2)
     except KeyboardInterrupt:
         pass
 
