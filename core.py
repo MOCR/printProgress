@@ -27,7 +27,7 @@ class void_printer:
     def __init__(self, message=None, printInterval=1):
         pass
 
-    def __call__(self, message):
+    def __call__(self, message, timer=False):
         return self
 
     def __enter__(self, timer=False):
@@ -35,7 +35,7 @@ class void_printer:
 
     def __exit__(self, type, value, traceback):
         if all((type, value, traceback)):
-            raise type, value, traceback
+            raise type(value).with_traceback(traceback)
 
 
 class printProg:
@@ -114,7 +114,7 @@ class printProg:
             del self.status[-1]
             del self.message[-1]
             if type != KeyboardInterrupt:
-                raise type, value, traceback
+                raise type(value).with_traceback(traceback)
         else:
             self.status[-1] = bcolors.OKGREEN + "OK" + bcolors.ENDC
             if self.timers[-1] != -1:
@@ -187,7 +187,7 @@ class printProg:
 
     def loop(self, loop_def, refresh_intervals=10):
         if type(loop_def) == int:
-            loop_def = range(loop_def)
+            loop_def = list(range(loop_def))
         if type(loop_def) is list:
             nb_elements = len(loop_def)
         else:

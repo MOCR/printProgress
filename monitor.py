@@ -49,27 +49,27 @@ def launch_monitoring(refresh=True, extra_infos = True):
                         identifier += " " + files_data[f_path]["HOST"]
                     if current_time-files_dates[f_path]<time_limit or i == len(list(files_data.keys()))-1:
                         if len(files_data[f_path]["messages"]) == 1 and i != len(list(files_data.keys()))-1:
-                            print(size_formating(identifier,first_col) +
+                            print((size_formating(identifier,first_col) +
                                   size_formating(files_data[f_path]["messages"][0], sec_col)+
-                                  size_formating("[" +files_data[f_path]["STATUS"][-1]+ "]", third_col))
+                                  size_formating("[" +files_data[f_path]["STATUS"][-1]+ "]", third_col)))
                         else:
-                            print(size_formating(identifier, first_col) +
-                                  size_formating(files_data[f_path]["messages"][0], sec_col))
-                            print(size_formating("", first_col) +
+                            print((size_formating(identifier, first_col) +
+                                  size_formating(files_data[f_path]["messages"][0], sec_col)))
+                            print((size_formating("", first_col) +
                                   size_formating(files_data[f_path]["messages"][-1], sec_col)+
-                                  size_formating("[" +files_data[f_path]["STATUS"][-1]+ "]", third_col))
+                                  size_formating("[" +files_data[f_path]["STATUS"][-1]+ "]", third_col)))
                             if "loop_remaining_time" in files_data[f_path]["infos"]:
-                                print(size_formating("", first_col) + size_formating("Remaining time :",sec_col) +
-                                      size_formating(files_data[f_path]["infos"]["loop_remaining_time"],third_col))
+                                print((size_formating("", first_col) + size_formating("Remaining time :",sec_col) +
+                                      size_formating(files_data[f_path]["infos"]["loop_remaining_time"],third_col)))
                             if "GPU" in files_data[f_path]["infos"]:
-                                print(size_formating("", first_col) +size_formating("Using GPU : ",sec_col) +
-                                      size_formating("[" + ", ".join(files_data[f_path]["infos"]["GPU"])+"]",third_col))
+                                print((size_formating("", first_col) +size_formating("Using GPU : ",sec_col) +
+                                      size_formating("[" + ", ".join(files_data[f_path]["infos"]["GPU"])+"]",third_col)))
                             if extra_infos:
                                 for inf_key in list( files_data[f_path]["infos"].keys()):
                                     if inf_key != "GPU" and inf_key != "loop_remaining_time":
-                                        print(size_formating("", first_col) +
+                                        print((size_formating("", first_col) +
                                               size_formating(inf_key.replace("_", " ") + " :",sec_col) +
-                                              size_formating(str( files_data[f_path]["infos"][inf_key]),third_col))
+                                              size_formating(str( files_data[f_path]["infos"][inf_key]),third_col)))
             if not refresh:
                 break
             else:
