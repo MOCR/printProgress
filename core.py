@@ -43,8 +43,9 @@ class printProg:
         Context for clean printing of state of the system.
     """
 
-    def __init__(self, message, printInterval=1, monitorGPU=False):
+    def __init__(self, message, printInterval=1, monitorGPU=False, do_print=True):
         self.progress_info_dir = os.path.split(__file__)[0]+"/logs/"
+        self.activate_print = do_print
         try:
             os.mkdir(self.progress_info_dir)
         except:
@@ -153,25 +154,27 @@ class printProg:
         self.printStatus()
 
     def printResult(self, flag, message):
-        if self.on_line:
-            sys.stdout.write("\n")
-            self.on_line = False
-        self.indent_message()
-        sys.stdout.write("[" + bcolors.OKBLUE + flag + bcolors.ENDC + "] " + message + "\033[K\n")
-        sys.stdout.flush()
+        if self.activate_print:
+            if self.on_line:
+                sys.stdout.write("\n")
+                self.on_line = False
+            self.indent_message()
+            sys.stdout.write("[" + bcolors.OKBLUE + flag + bcolors.ENDC + "] " + message + "\033[K\n")
+            sys.stdout.flush()
         self.printStatus()
 
     def printStatus(self, retour=False):
-        self.indent_message()
-        sys.stdout.write(self.message[-1] + " [")
-        sys.stdout.write(self.status[-1] + "]\033[K")
-        if retour:
-            sys.stdout.write("\n")
-            self.on_line = False
-        else:
-            sys.stdout.write("\r")
-            self.on_line = True
-        sys.stdout.flush()
+        if self.activate_print:
+            self.indent_message()
+            sys.stdout.write(self.message[-1] + " [")
+            sys.stdout.write(self.status[-1] + "]\033[K")
+            if retour:
+                sys.stdout.write("\n")
+                self.on_line = False
+            else:
+                sys.stdout.write("\r")
+                self.on_line = True
+            sys.stdout.flush()
         self.writeProgress()
 
     def setStatus(self, status, printInterval=False):
@@ -219,3 +222,6 @@ class printProg:
     def addInfo(self, **kwargs):
         for k in list(kwargs.keys()):
             self.infos[k]=kwargs[k]
+
+    def setPrintMode(self, do_print):
+        self.activate_print=do_print
